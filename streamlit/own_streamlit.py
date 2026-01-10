@@ -27,6 +27,7 @@ st.divider()
 st.header("Getting started")
 st.text("Here I'm writing the details of my learnings. I'll be using streamlit to note down my streamlit notes 😂🔥")
 
+st.divider()
 
 st.subheader("Installation")
 st.text("Let's get started with installation first.")
@@ -55,13 +56,46 @@ st.markdown("""
 
 st.divider()
 
-
 st.subheader("Page title")
-st.text("Consider this as the page into. Like headline of news or the title of our article. Below is what I have used for this page")
-st.code(body="""st.title("Streamlit Demo")""", language="python")
+st.caption("Typically used once per page")
+st.text("Consider this as the page intro. Like headline of news or the title of our article. Below is what I have used for this page")
+st.code(body="st.title(\"Streamlit Notes\")", language="python")
 
-st.empty()
+st.divider()
 
+st.subheader("Headings")
+st.text("In streamlit we have 2 heading options as header and subheader. Its intentional to keep it simple.")
+header_col, subheader_col = st.columns(2)
+with header_col:
+    st.markdown("""##### Headers  
+        
+    - Translated to h2 tags
+    - Mark heading of the section""")
+    st.text("Like I have used for this section")
+    st.code('st.header("Getting started")')
+    pass
+with subheader_col:
+    st.markdown("""##### Subheaders  
 
-with st.expander("Expander"):
-    st.text("This is like html details tag and summary goes in string parameter as above")
+        - Translated to h3 tags
+        - Mark subheadings of the section""")
+    st.text("Like I have used for this")
+    st.code('st.subheader("Headings")')
+
+st.divider()
+
+st.subheader("Captions")
+st.text("These are best to provide context for something. For ex, adds timeframe below a matrics etc")
+st.text("Like I have used right below the page title")
+st.code(body='st.context("A sample streamlit page to demo commonly used elements")')
+
+st.divider()
+st.subheader("Markdown")
+st.text("Streamlit also provides the option to use markdown. We can render any markdown in out UI and it would work fine.")
+st.text("I have been using this through out the page. Bullet points are the simple examples.")
+st.code(language="python", body="""
+ st.markdown(\"""##### Subheaders  
+
+        - Translated to h3 tags
+        - Mark subheadings of the section""\")""")
+st.caption("Not just these but we can use all the markdown tags")
