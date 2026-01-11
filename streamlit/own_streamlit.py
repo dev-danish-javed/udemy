@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Page config, page_title -> tab title, page_icon -> favicon, layout -> wide=container fulid, center=container (bootstrap)
 st.set_page_config(page_title='Danish Javed',page_icon="👨🏻‍💻", layout='wide')
@@ -90,6 +93,241 @@ st.text("Like I have used right below the page title")
 st.code(body='st.context("A sample streamlit page to demo commonly used elements")')
 
 st.divider()
+
+st.subheader("Divider")
+st.markdown("This is simple `<hr>`. Provides a horizontal ruling across the screen.")
+st.code(body="st.divider()", language="python")
+
+st.divider()
+st.subheader("Code block")
+st.markdown("This is `<code>` with streamlit styling and feature.")
+st.markdown("We have three important and very useful parameters here.  ")
+st.markdown("""
+- body : the code
+- width : the width of the block -> "content" | "streach"
+- language : the language of the code
+""")
+st.code(body="""st.code(body="st.code('<code>')", language="python", width="content")""",
+        language="python", width="content")
+
+st.divider()
+st.header("""Structure the layout""")
+st.caption("Allows to provide structure our pages")
+
+st.subheader("Columns")
+st.text("Same as html tables but with slightly different syntax. "
+        "There is no row explicitly. "
+        "We create n number of columns that are all a part of one row. "
+        "When we need new row, we create new set of columns, which by default will be rendered in a new row.")
+
+st.code(body="""
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("#### Column 1")
+    st.text("Blah blah "* 15)
+with col2:
+    st.markdown("#### Column 2")
+    st.text("Blah blah "* 15)
+with col3:
+    st.markdown("#### Column 3")
+    st.text("Blah blah "* 15)
+""", language="python")
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("#### Column 1")
+    st.text("Blah blah "* 15)
+with col2:
+    st.markdown("#### Column 2")
+    st.text("Blah blah "* 15)
+with col3:
+    st.markdown("#### Column 3")
+    st.text("Blah blah "* 15)
+
+st.markdown("""
+#### Column width
+""")
+st.text("By default, the columns generated used equal width. But we do get the option to make them use custom width. "
+        "Same columns as above used with different width.")
+st.text("Instead of pssing the count of columns we want, we pass an array with ratio units of the widths we want. "
+        "The count of the array size decides the number of columns ")
+st.code("col1, col2, col3 = st.columns([4,2,1])", language="python")
+col1, col2, col3 = st.columns([4,2,1])
+with col1:
+    st.markdown("#### Column 1")
+    st.text("Blah blah "* 15)
+with col2:
+    st.markdown("#### Column 2")
+    st.text("Blah blah "* 15)
+with col3:
+    st.markdown("#### Column 3")
+    st.text("Blah blah "* 15)
+
+st.divider()
+
+st.subheader("Container")
+st.text("""
+This is a logic group of ui elements. Conceptually, they are similar to what components are in react.
+They don't add anything on the UI level other than structural grouping, nothing visible to the user.
+""")
+st.code(body="""
+with st.container():
+    st.text("This is inside a container")
+
+""", language="python")
+st.text("Rendered as 👇🏻, notice that nothing fancy is happening here")
+with st.container():
+    st.text("This is inside a container")
+
+st.text("The prime benifit is when paried with functions, they act as resulable blocks, conceptually, a component")
+
+st.code(body="""
+def greet_person(name:str):
+    with st.container():
+        prefix = "" if name.startswith("Mr") else "Mr. "
+        st.markdown(f"Hello _**{prefix}{name}**_")
+
+greet_person("Elon")
+greet_person("Mr Trump")
+""")
+st.text('Renders 👇🏻')
+def greet_person(name:str):
+    with st.container():
+        prefix = "" if name.startswith("Mr") else "Mr. "
+        st.markdown(f"Hello _**{prefix}{name}**_")
+
+greet_person("Elon")
+greet_person("Mr Trump")
+
+st.divider()
+
+st.subheader("Expanders")
+st.markdown("""
+Just like we have `details` tag html, we have expanders in streamlit. The `summary` part goes as string parameter. 
+""")
+st.code(body="""
+with st.expander("Summary"):
+    st.text("This is expander content")
+    st.text("Blah blah " * 150)
+""", language="python")
+
+st.text("Renders this 👇🏻")
+
+with st.expander("Summary"):
+    st.text("This is expander content")
+    st.text("Blah blah " * 150)
+
+st.divider()
+
+st.subheader("Sidebars")
+st.text(
+    "Consider these are the side panel that we often see in the documentation "
+    "or the filters section that we get in ecom websites. "
+)
+st.markdown("""
+These have the same set of options that we have in streamlit, just that we have to do `st.sidebar.<anything else>`.
+""")
+
+st.caption("I have kept the code down here, for article purpose, but its better to keep it on early part of the page for readability")
+st.text("Checkout the upper left corner of this page. Click the icon and that's where the content is rendered.")
+
+st.sidebar.title("Sidebar")
+st.sidebar.text("The filters and other stuff goes here")
+
+st.code("""
+st.sidebar.title("Sidebar")
+st.sidebar.text("The filters and other stuff goes here")
+""")
+
+st.divider()
+st.header("Texts and messaging")
+st.subheader('Write')
+st.text("Most commonly used, and most versetile. "
+        "We can throw any type of data and it'll render it perfectly. "
+        "It auto-detects the input type and renders accordingly while accepting n number of arguments.")
+st.write("""
+- String → text / markdown
+- Number → text
+- List / dict → pretty print
+- DataFrame → table
+- Matplotlib / Plotly fig → chart
+- Multiple args → spaced output
+""")
+st.text("Code for this 👆🏻 is here 👇🏻")
+st.code(body="""
+    st.write(\"""
+    - String → text / markdown
+    - Number → text
+    - List / dict → pretty print
+    - DataFrame → table
+    - Matplotlib / Plotly fig → chart
+    - Multiple args → spaced output
+    ""\")
+    """)
+with st.expander("_**Checkout examples**_"):
+
+
+    st.text("Some examples")
+    text_col, markdown_col, number_col= st.columns(3)
+    with text_col:
+        st.markdown("**Text Example**")
+        st.code("""st.write("Hello Text")""")
+        st.write("Hello Text")
+        pass
+    with markdown_col:
+        st.markdown("**Markdown Example**")
+        st.code("""st.write("_**Hello markdown**_")""")
+        st.write("_**Hello markdown**_")
+        pass
+    with number_col:
+        st.markdown("**Number Example**")
+        st.code("""st.write(525, 324)""")
+        st.write(525, 324)
+        pass
+    with st.container():
+        st.markdown("**List/Dict Example**")
+        st.code("""
+        st.write(["Hello", "**World**", 123], {"name":"Sahiba Bali", "occpation":"Actor/Influencer"})
+        """)
+        st.write(["Hello", 123], {"name":"Sahiba Bali", "occpation":"Actor/Influencer"})
+        pass
+
+    with st.container():
+            st.markdown("#### Dataframes Examples")
+            st.caption("For now they would seem a little too advance, that is why I have placed them here.")
+            st.text("These are actually the most real world use cases and what we'll actually be doing in production. ")
+            table_df = pd.DataFrame({
+                "User": ["Aman", "Riya", "Karan", "Neha", "Ishaan"],
+                "Plan": ["Pro", "Free", "Enterprise", "Pro", "Free"],
+                "Amount (₹)": [2400, 0, 12000, 2400, 0],
+                "Status": ["Success", "Pending", "Success", "Success", "Failed"]
+            })
+            st.write(table_df)
+
+            # df = pd.DataFrame({
+            #     "day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            #     "revenue": [120, 150, 100, 180, 160, 220, 200],
+            #     "users": [80, 95, 70, 110, 105, 140, 130],
+            #     "conversion_rate": [3.2, 3.5, 2.9, 4.1, 3.8, 4.5, 4.3]
+            # })
+            # fig, ax = plt.subplots(figsize=(21, 9))
+            #
+            # sns.lineplot(
+            #     data=df,
+            #     x="day",
+            #     y="revenue",
+            #     marker="o",
+            #     ax=ax
+            # )
+            #
+            # ax.set_title("Daily Revenue Trend")
+            # ax.set_ylabel("Revenue")
+            # ax.set_xlabel("Day")
+            #
+            # plt.tight_layout()
+            # st.write(fig)
+
+st.divider()
 st.subheader("Markdown")
 st.text("Streamlit also provides the option to use markdown. We can render any markdown in out UI and it would work fine.")
 st.text("I have been using this through out the page. Bullet points are the simple examples.")
@@ -99,3 +337,16 @@ st.code(language="python", body="""
         - Translated to h3 tags
         - Mark subheadings of the section""\")""")
 st.caption("Not just these but we can use all the markdown tags")
+
+st.markdown("##### ⚠️Hack")
+st.caption("It's not recommended at all, as it breaks the UI consistency and defates the purpose of simplicity")
+st.markdown("We can also render html in streamlit, which we shouldn't unless its a must. we need to pass `unsafe_allow_html=True`. Here is an example")
+st.code("""
+st.markdown("We can also render html in streamlit, which we shouldn't unless its a must. Here is an example"
+            "<span style=\"color:red\">This is html<span>", unsafe_allow_html=True)
+""")
+st.text("Renders 👇🏻")
+st.markdown("<span style=\"color:red\">This is html<span>", unsafe_allow_html=True)
+
+st.divider()
+
