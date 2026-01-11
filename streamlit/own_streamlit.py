@@ -350,3 +350,64 @@ st.markdown("<span style=\"color:red\">This is html<span>", unsafe_allow_html=Tr
 
 st.divider()
 
+st.subheader("Code block")
+st.markdown("This is `<code>` with streamlit styling and feature.")
+st.markdown("We have three important and very useful parameters here.  ")
+st.markdown("""
+- body : the code
+- width : the width of the block -> "content" | "streach"
+- language : the language of the code
+""")
+st.code(body="""st.code(body="st.code('<code>')", language="python", width="content")""",
+        language="python", width="content")
+
+st.divider()
+
+st.subheader("Text")
+st.write("""
+Usually, used for logs and data that are raw. **It doesn't allow markdown**.
+""")
+
+st.code('st.text("Hello World!!")', language="python", width="content")
+st.text("Hello World!!")
+
+st.divider()
+
+st.subheader("Callouts")
+st.write("""
+These are elements used to provide status or key findings, like toast messages or notes blocks. We have 4 options available here.
+
+- info
+- error
+- warning
+- exception
+""")
+
+info_col, error_col = st.columns(2)
+with info_col:
+    st.write("""
+    ##### Info
+    """)
+    st.code("""st.info("Password has to be alpha numeric.", icon="ℹ️")""",
+            language="python", width="content")
+    st.info("Dashboard API is online now", icon="ℹ️")
+with error_col:
+    st.write("""
+    ##### Error
+    """)
+    st.code("""st.error("API Key expired", icon="🚨")""", language="python", width="content")
+    st.error("Invalid API key", icon="🚨")
+
+warning_col, exception_col = st.columns(2)
+with warning_col:
+    st.write("""##### Warning""")
+    st.code("""st.warning("Password is to expire in 3 days.", icon="⚠️")""", language="python", width="content")
+    st.warning("Password is to expire in 3 days.", icon="⚠️")
+with exception_col:
+    st.write("""##### Exception""")
+    st.code("""st.exception(RuntimeError("This is a dummy exception"))""", language="python", width="content")
+    st.exception(RuntimeError("This is a dummy exception"))
+
+st.divider()
+
+
